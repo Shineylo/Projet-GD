@@ -12,6 +12,7 @@ public class FightSceneManager : GeoRpgSceneManager
     [SerializeField] private GameObject hpPlayerBar;
     [SerializeField] private GameObject staminaEnemyBar;
     [SerializeField] private GameObject hpEnemyBar;
+    [SerializeField] private int hpEnemy = 20;
 
     private void Awake()
     {
@@ -36,13 +37,18 @@ public class FightSceneManager : GeoRpgSceneManager
     void Start()
     {
         hpPlayerBar.GetComponent<Slider>().maxValue = GameManager.Instance.CurrentPlayer.MaxHp;
-        //hpEnemyBar.GetComponent<Slider>().maxValue = GameManager.Instance.;
+        hpEnemyBar.GetComponent<Slider>().maxValue = hpEnemy;
         //debug.PlayerPrefs.GetString("list");
     }
 
     private void Update()
     {
         updateHP();
+        if(hpEnemy == 0)
+        {
+            GameManager.Instance.CurrentPlayer.AddXp(10);
+            SceneTransitionManager.Instance.GoToScene(GeoRpgConstant.SCENE_WORLD, new List<GameObject>());
+        }
     }
 
     public void escape()
@@ -50,10 +56,16 @@ public class FightSceneManager : GeoRpgSceneManager
         SceneTransitionManager.Instance.GoToScene(GeoRpgConstant.SCENE_WORLD, new List<GameObject>());
     }
 
+    public void attaque()
+    {
+        hpEnemy -= 5;
+    }
+
     public void updateHP()
     {
         pvPlayerText.text = GameManager.Instance.CurrentPlayer.Hp.ToString() + " / " + GameManager.Instance.CurrentPlayer.MaxHp;
         hpPlayerBar.GetComponent<Slider>().value = GameManager.Instance.CurrentPlayer.Hp;
-        
+        hpEnemyBar.GetComponent<Slider>().value = hpEnemy;
+
     }
 }
