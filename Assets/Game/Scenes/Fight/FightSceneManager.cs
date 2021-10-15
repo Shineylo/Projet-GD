@@ -58,7 +58,7 @@ public class FightSceneManager : GeoRpgSceneManager
 
     public void attaque()
     {
-        hpEnemy -= 5;
+        hpEnemy = hpEnemy - (int)GameManager.Instance.CurrentPlayer.Attack;
     }
 
     public void updateHP()

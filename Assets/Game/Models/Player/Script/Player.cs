@@ -76,10 +76,10 @@ public class Player : MonoBehaviour
         Load();
     }
 
-    public void AddXp(int xp)
+    public void AddXp(int xpa)
     {
-        xp = Mathf.Max(0, xp);
-        //InitLevelData();
+        xp = Mathf.Max(0, xpa);
+        InitLevelData();
     }
 
     public void AddEnemy(GameObject enemy)
